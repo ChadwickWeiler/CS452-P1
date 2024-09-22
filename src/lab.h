@@ -10,6 +10,8 @@
 #define lab_VERSION_MINOR 0
 #define UNUSED(x) (void)x;
 
+extern const char *MY_PROMPT;
+
 #ifdef __cplusplus
 extern "C"
 {
