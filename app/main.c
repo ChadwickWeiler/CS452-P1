@@ -13,6 +13,9 @@ int main(int argc, char **argv)
   int c;
   extern char *optarg;
   extern int optind, optopt, opterr;
+  
+
+
 
   while((c = getopt (argc, argv, "vi")) != -1)
     switch (c) {
@@ -21,7 +24,8 @@ int main(int argc, char **argv)
         break;
 
         case 'i':
-        userInput;
+
+        
         break;
 
       case '?':
@@ -34,16 +38,9 @@ int main(int argc, char **argv)
       default:
         abort();
         break;
-    }
+    
 
-  return 0;
-}
-
-char userInput(){
-  char *line;
-  while ((line=readline("$"))){
-      printf("%s\n",line);
-      add_history(line);
-      free(line);
+  
   }
+  return 0;
 }
