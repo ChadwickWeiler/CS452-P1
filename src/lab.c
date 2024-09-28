@@ -28,6 +28,7 @@ char *get_prompt(const char *env){
 
 char **cmd_parse(char const *line){
 
+    size_t max_arguments = sysconf(_SC_ARG_MAX);
     char *new_line = strdup(line);
     char **stored_strings = NULL;
     char *command = strtok(new_line, " ");
@@ -44,5 +45,13 @@ char **cmd_parse(char const *line){
     stored_strings = realloc(stored_strings, sizeof(i + 1));
     stored_strings[i] = NULL;
 
-    return stored_strings;
+    if(sizeof(stored_strings) > max_arguments){
+        fprintf(stderr, "too many arguments");
+        return NULL;
+    }
+    else{
+        return stored_strings;
+    }
+
+    
 }
