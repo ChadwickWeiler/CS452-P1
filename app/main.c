@@ -9,6 +9,7 @@
 
 int main(int argc, char **argv){
   int c;
+  //int historyflag;
   extern char *optarg;
   extern int optind, optopt, opterr;
 
@@ -17,6 +18,7 @@ int main(int argc, char **argv){
 
       case 'v':
         printf("Version %d.%d\n", lab_VERSION_MAJOR, lab_VERSION_MINOR);
+        return 0;
         break;
 
         case 'i':
@@ -37,18 +39,48 @@ int main(int argc, char **argv){
     
     }
 
+
+  const char *shell_prompt = get_prompt("MY_PROMPT");
   char *line;
 
+  using_history();
+  while ((line=readline(shell_prompt))){
 
-    using_history();
-    printf(" \n");
-    const char *shell_prompt = get_prompt(NULL);
-    while ((line=readline(shell_prompt))){
-    printf("%s\n",line);
-    add_history(line);
-    free(line);
+    if(strcmp(line, "exit") == 0 || strcmp(line, "EOF") == 0){
+      //quit and free memory
+      free(line);
+      free((void *)shell_prompt);
+      exit(0);
     }
 
+    if(strcmp(line, "history") == 0){
 
-  return 0;
+          int i = 0;
+
+          HIST_ENTRY **history_print = history_list();
+          if(history_print != NULL){
+            while(history_print[i] != NULL){
+              printf("%s\n", history_print[i]->line);
+              i++;
+            }
+          }
+
+          else{
+            printf("No History found\n");
+          }         
+    }
+    if(strcmp(line, "cd") == 0){
+      
+    }
+
+    //printf("%s\n",line);
+    add_history(line);
+    free(line);
+  }
+
+  //freeing memory
+  free((void *)shell_prompt);
+
+  exit(1);
 }
+
