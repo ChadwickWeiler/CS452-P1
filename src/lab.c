@@ -3,7 +3,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <pwd.h>
 
+const char *default_directory = "HOME";
 const char *default_prompt = "shell>";
 char **stored_strings = NULL;
 int arguments = 0;
@@ -25,9 +27,26 @@ char *get_prompt(const char *env){
 
 }
 
-// int change_dir(char **dir){
+int change_dir(char **dir){
+    char *new_directory;
 
-// }
+    if(dir[0] == NULL){
+        struct passwd *pass = getpwuid(getuid());
+        new_directory = pass ->pw_dir;
+    }
+    else{
+        new_directory = dir[0];
+    }
+    
+    if(chdir(new_directory) == 0){
+        return 0;
+    }
+
+    else{ 
+        return -1;
+    }
+
+}
 
 char **cmd_parse(char const *line){
 

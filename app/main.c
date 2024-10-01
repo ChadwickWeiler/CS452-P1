@@ -6,7 +6,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-#define MAX_ARGUMENTS 8
+#define ARG_MAX sysconf(_SC_ARG_MAX)
 
 int main(int argc, char **argv){
   int c;
@@ -49,7 +49,7 @@ int main(int argc, char **argv){
 
   using_history();
   while ((line=readline(shell_prompt))){
-    char *arguments[MAX_ARGUMENTS];
+    char *arguments[ARG_MAX];
     int i = 0;
 
     trim_white(line);
@@ -57,7 +57,7 @@ int main(int argc, char **argv){
 
     char* tokens = strtok(line, " ");
 
-    while (tokens != NULL && i < MAX_ARGUMENTS -1){
+    while (tokens != NULL && i < ARG_MAX -1){
       arguments[i] = tokens;
       i++;
       tokens = strtok(NULL, " ");
@@ -96,7 +96,7 @@ int main(int argc, char **argv){
       }
 
       if(strcmp(arguments[0], "cd") == 0){
-        
+        change_dir(&arguments[1]);
       }
 
     }
