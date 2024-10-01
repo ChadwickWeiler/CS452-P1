@@ -89,6 +89,7 @@ void cmd_free(char ** line){
 }
 
 char *trim_white(char *line){
+    int non_empty_flag = 0;
 
     if (line == NULL) {
     fprintf(stderr, "Err NULL pointer in trim_white\n");
@@ -111,7 +112,7 @@ char *trim_white(char *line){
         //advance in the line if its not a white space
         if(!isspace((unsigned char)*trimmed_line)){
             *line_copy++ = *trimmed_line;
-
+            non_empty_flag = 1;
         }
 
         else{
@@ -123,6 +124,11 @@ char *trim_white(char *line){
 
         trimmed_line++;
     }
+
+    if((non_empty_flag == 1) && *(line_copy - 1) == ' '){
+         line_copy--;
+    }
+   
 
     *line_copy = '\0';
     return line;
