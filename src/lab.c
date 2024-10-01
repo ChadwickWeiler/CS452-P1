@@ -51,20 +51,21 @@ int change_dir(char **dir){
 char **cmd_parse(char const *line){
 
     size_t max_arguments = sysconf(_SC_ARG_MAX);
+    char **stored_strings = NULL;
     char *new_line = strdup(line);
     char *command = strtok(new_line, " ");
     int i = 0;
     
 
     while(command != NULL){
-        stored_strings = realloc(stored_strings, sizeof(i + 1));
+        stored_strings = realloc(stored_strings, (i + 1) * sizeof(char*));
         stored_strings[i] = strdup(command);
         i++;
         arguments = i; 
         command = strtok(NULL, " ");
     }
 
-    stored_strings = realloc(stored_strings, sizeof(i + 1));
+    stored_strings = realloc(stored_strings, (i + 1) * sizeof(char*));
     stored_strings[i] = NULL;
 
     if(sizeof(stored_strings) > max_arguments){
@@ -77,13 +78,14 @@ char **cmd_parse(char const *line){
 }
 
 void cmd_free(char ** line){
-    if((arguments = 0)){
-        fprintf(stderr, "nothing to free");
+    int i = 0;
+    if((line[i] != NULL)){
+        free(line[i]);
+        i++;
     }
-    else{
-        free(stored_strings);
-        free(line);
-    }
+
+    free(line);
+ 
 }
 
 char *trim_white(char *line){
