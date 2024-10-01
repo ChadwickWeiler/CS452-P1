@@ -77,13 +77,14 @@ char *trim_white(char *line){
     char *trimmed_line = line;
     char *line_copy = line;
     
-    //int i = 0; //keeping track of character position
 
     //skips beginning whitespace
     while(*trimmed_line && isspace((unsigned char)*trimmed_line)){
             trimmed_line++;
     }
 
+    //checks if next character is whitespace, if it is, 
+    //skips any proceeding whitespace til the next character or end of line
     while(*trimmed_line){
 
         //advance in the line if its not a white space
@@ -107,3 +108,11 @@ char *trim_white(char *line){
 
 
 }
+
+// bool do_builtin(struct shell *sh, char **argv);
+
+// void sh_init(struct shell *sh);
+
+// void sh_destroy(struct shell *sh);
+
+// void parse_args(int argc, char **argv);
