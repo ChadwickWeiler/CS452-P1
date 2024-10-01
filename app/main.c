@@ -12,6 +12,9 @@ int main(int argc, char **argv){
   //int historyflag;
   extern char *optarg;
   extern int optind, optopt, opterr;
+  char test_input[100] = "     wow buddy   this     is wild   ";
+  char *trimmed = trim_white(test_input);
+  printf("%s\n", trimmed);
 
   while((c = getopt (argc, argv, "vi")) != -1)
     switch (c) {
@@ -22,7 +25,6 @@ int main(int argc, char **argv){
         break;
 
         case 'i':
-
         
         break;
 
